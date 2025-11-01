@@ -1,0 +1,34 @@
+
+
+
+int main() will be the structure of the sim loop. In it will reside either: one loop
+for the passing of a day and one loop to describe normal business hours of a
+physical store inside that day. OR One single loop describing hours and a function
+to denote hours in a day and the average happenings at those times.
+
+int main() as a full day and open hours loop
+
+    while day{
+
+
+        while open{
+
+        }
+    }
+
+
+OTHER FUNCTIONS::
+
+int diceOfLife()
+    funtion to roll dice
+    number of arguments passed = number of dice to roll
+    value of arguments = sides of each die
+    
+void stock()
+    function to read and update a .txt containing a map of current stock after its
+    values have been modifed inside of a function
+
+void books()
+    function that appends to a table? or simple .txt that contains the days
+        -remaining stock read from the stock .txt
+        -revenue from days, weeks, months sales and profit

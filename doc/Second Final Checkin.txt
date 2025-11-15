@@ -1,0 +1,11 @@
+Michael Matter
+Trevor Swarm
+COSC 1030-500
+31 October, 2025
+
+Final Planning 2
+This script will simulate the passage of days in a point-of-retail system. A main ‘for’ loop represents each day, covering both online-only and in-store purchase activities. Within the daily loop, a second loop simulates in-store purchases. Random number generation (RNG) will drive changes in variables to mimic buying and selling of products.
+I have heard you regarding the simplicity of the program. I will frame it out with the idea of a diary/calendar and a single monitor in mind. I will drop in the implementations necessary to add more stock and comment em out or something but only as I think of em. All focus will go to the general function first.
+At the start, the script will ask for the number of days to simulate and the reorder threshold number. At the end of each simulated day, it will add to a multi-dimensional array: the day number, number of orders, stock on hand (per SKU), sales (per SKU), the reorder threshold used, and a restock prediction. After the simulation, it will write this info to a file and also print the highlight values to terminal. 
+
+	I have improved on the concept of an old roll model I worked out in python. Using a template function, I’ll be able to easily call for more shaped random values in whatever scenario my heart desires, once the meat and potatoes are in place of course. I intend to use this and some extra research to enhance the simulation’s realism.

@@ -2,46 +2,13 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-// #include "header\dice.hpp"
-
-/*
-main() will be the structure of the sim loop. In it will reside either: one loop
-for the passing of a day and one loop to describe normal business hours of a
-physical stores open hours. OR One single loop describing hours and conditionals
-to denote hours in a day and the average happenings at those times.
-*/
-
-// This template is set to accept a pack of ints
-// The pack of ints is unpacked as arguments
-// The arguments are constructed into an array
-// i to count the number of arguments in the pack
-// running total of all rolls
-// for each roll : in the 'bag' of dice
-// roll
-// increment i
-template <typename... Dice> 
-int roll(Dice... dice) {  
-    int bag[] = { dice... };  
-    int i = 0;                
-    int total = 0;            
-    
-    for (int roll : bag) {
-      if (roll == 0){
-        
-      }   
-        total += rand() % roll;    
-        i ++;                      
-    }
-    return total/i;
-}
-
-int reorder(int i) {
-  return i+4; // or whatever number of days it takes
-}
+#include "..\header\dice.h"
+#include "..\header\day.h"
 
 int main() {
   std::cout << "Stock Simulation!\n";
   std::string rerun = "play";
+  
 
   while (rerun != "quit") {
     int numRuns;

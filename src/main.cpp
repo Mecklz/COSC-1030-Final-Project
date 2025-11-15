@@ -17,24 +17,13 @@ int main() {
     int SKU = 0;
     srand(time(0));
 
-    //std::vector<int> catalogue;
-
     std::cout << "Please enter the number of simulations *MAX 10,000*" << std::endl;
     std::cin >> numRuns;
 
     std::cout << "Please enter the reorder threshold. EX. Low end number of items that will trigger a reorder." <<  std::endl;
     std::cin >> reOrder;
     
-    // while (true){
-    //   std::cout << "Enter SKUs one by one followed by 'x' to continue" << endl;
-    //   std::cin >> SKU;
-    //   if (SKU == 'x'){
-    //     break;
-    //   }
-    //   else {
-    //     catalogue.push_back(SKU);
-    //   }
-    // }
+    std::vector<Day> day(numRuns);
 
     for (i = 0; i < numRuns; i++){
       int stock = 18;

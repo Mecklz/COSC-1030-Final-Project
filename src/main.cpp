@@ -25,20 +25,8 @@ int main() {
     
     std::vector<Day> day(numRuns);
 
-    for (i = 0; i < numRuns; i++){
-      int stock = 18;
-      //if (i is equal to reorder/restock day){
-      //  if (roll(TBD) > TBD) {
-      //    sell 1 monitor.
-      //}
-      //  else if (roll(TBD) > TBD){
-      //    sell 2 monitors
-      //}
-      //}
-      if (stock < 1) {
-        // int dayNum = reorder(i);
-      }
-    }
+        
+
   }
     
 

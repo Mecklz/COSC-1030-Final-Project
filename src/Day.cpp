@@ -5,6 +5,10 @@
 #include "..\header\dice.h"
 #include "..\header\day.h"
 
+class Day {
+
+}
+
 Day::Day() {
     demand = roll(100,2,1);
     sale = demand * level;

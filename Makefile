@@ -11,13 +11,14 @@ main_cpp:
 
 dice: dice_cpp
 	.\$(BIN)\dice.exe
+
 dice_cpp: 
 	cl $(SRC)\dice.cpp /Fe:$(BIN)\dice.exe
 
 test: test_cpp
 	.\$(BIN)\test.exe
 
-test_cpp:
+test_cpp: clean
 	cl $(TEST)\test.cpp /Fe:$(BIN)\test.exe
 
 clean:

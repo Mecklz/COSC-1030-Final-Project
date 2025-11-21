@@ -1,79 +1,82 @@
 #include <iostream>
+#include <iomanip>
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+// #include "..\header\dice.h"
+// #include "..\header\day.h"
 using namespace std;
 
-// template<typename T> // This must be in the header file.
-// T roll(T dice) {
-//     int i = 0;
-//     int total = 0;
-//     int bag[] = { dice... };
-//     for (int roll : bag) {
-//         total += rand() % roll;
-//         i ++;
-//     }
-//     return total/i;
-// }
 
+template<typename... Dice> // This template is set to accept a pack of ints
+double roll(Dice... dice) {  // The pack of ints is unpacked as arguments
+    int bag[] = { dice... };  // The arguments are constructed into an array
+    int length = 0;         // the length of the array
+    double temp = 0;          // Multi-purpose int      
+    int x;
 
-
-// int main() {
-//     srand(static_cast<unsigned int>(time(0))); // Seed the random number generator
-//     cout << "Hello World!\n";
-//     int a = 20;
-//     int b = 6;
-//     int c = 12;
-//     cout << roll(1) << endl;
-// }
-
-
-
-// template <typename... Dice>
-// int roll(Dice... dice) {
-//     int rolls[] = { dice... };
-//     int total = 0;
-//     int count = sizeof...(dice);
-
-//     for (int sides : rolls) {
-//         total += rand() % sides + 1; // +1 to simulate dice roll from 1 to sides
-//     }
-
-//     return total / count;
-// }
-
-// int main() {
-//     srand(static_cast<unsigned int>(time(0)));
-
-//     int a = 20;
-//     int b = 6;
-//     int c = 12;
-
-//     cout << "Average roll: " << roll(a, b, c, b, a) << endl;
-//     return 0;
-// }
-
-
-
-// template<typename T>
-// T Sum(T arg){
-//     return arg;
-// }
-// template<typename T,typename... Args>
-// T Sum(T arg, Args... args){
-//     return arg + Sum(args...);
-// }
-
-// int main(){
-//     cout << Sum(1,2,3,4) << endl;
-// }
-int main(){
-    std::vector<int> vec(5);
-    vec.at(5) = 90;
-    int i;
-    for(i=0; i < vec.size(); i++){
-        cout << vec.at(i) << endl;
+    for (int param : bag) {
+        length ++;
+        cout << param << endl; // DEBUG
+        cout << length << endl;
     }
+
+    if (length == 1) {             
+        cout << "Branch one." << endl;
+        return (rand() % (bag[0] + 1));  
+    }
+
+    else if (length == 2) {
+        cout << "Branch two." << endl;
+        for (x = 0; x < bag[1]; x ++) {
+            temp += (rand() % (bag[0] + 1));
+            cout << temp << endl;
+        }
+        cout << temp << "/" << bag[1] << endl;
+        double result = temp / bag[1];
+        return result;          // This is still not returning doubles........
+    }
+
+    else if (length == 3) {
+        cout << "Branch three." << endl;
+        if (bag[2] == 1) {
+            for (x = 0; x < bag[1]; x ++) {
+                temp += (rand() % (bag[0] + 1));
+                cout << temp << endl;
+            }
+            return ((temp / bag[1]) / bag[0]);
+        }
+
+        else if (bag[2] == 0) {
+            temp = (rand() % (bag[0] + 1)) + (rand() % (bag[1] + 1));
+            return std::floor(temp / 2);
+        }
+    }
+
+    return 0;
+};
+
+int main(){
+
+    srand(time(0));
+
+    cout << setprecision(2);
+
+    double one = roll(100);
+    cout << one << endl;
+
+    double two = roll(45,2);
+    cout << two << endl;
+
+    double three = roll(100,2,1);
+    cout << three << endl;
+
+    double four = roll(100,45,0);
+    cout << four << endl;
     
+    
+
+
+
 }
     

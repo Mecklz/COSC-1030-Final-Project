@@ -6,11 +6,18 @@ using namespace std;
 
 
 class Day {
-   private:
-    double demand;
-    double sale;
-   
    public:
+    int delivTime;
+    int sold;
+    int onHand_morn;
+    int onHand_eod;
+    int thresholdUsed;
+    int dayNum;
+   
+   private:
+    void unforeseen();
+    void printTo_file(string path) const;
+
       
 
 };

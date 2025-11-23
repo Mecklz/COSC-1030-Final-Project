@@ -1,0 +1,18 @@
+Michael Matter
+Trevor Swarm
+COSC 1030-500
+23 November, 2025
+
+Final Planning 3
+
+Ok I have finally found my way. After speaking to my wife, who did retail for many years, I know the final structure of my program.
+
+It will begin by asking what size business from 3 options that will increase by factors of 10 (so the math is easy). Then it will ask for the restock strategy. Options will be persistent (ie weekly truck) or threshold ordering. Then it will ask for the threshold and the target (fully stocked). Then of course it will ask for number of days. Aiming at 365 to simply simulate a year.
+
+It will run three times no matter what to test 3 demand values (low, normal, high). Simple math again. It'll just be functions of 1 (.75, 1, 1.25) units sold. That way I can modify if it feels weird.
+
+My roll function is, as always, completely over-engineered but it gave me great insight into what I actually needed AND I learned about templates and overloading.
+
+NOW! Here's the thing. I kind of already put myself on a path that I will absolutely try and divert from to at least have an alternative BUT I am going to try and instantiate a vector of 'day' classes. The default constructor will have all of the random numbers generated immediately so the actual loop with simply iterate through the vector and do math with the stored values and record the results. I KNOW that it will likely use a ton of memory but the second I learned that a vector could fill up with class objects, I could not deter myself. lol The idea gripped me. 
+
+Is there a good way to benchmark my code so I can see how memory/process intensive it is?

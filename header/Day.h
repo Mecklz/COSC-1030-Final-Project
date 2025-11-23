@@ -16,9 +16,7 @@ class Day {
    
    private:
     void unforeseen();
-    void printTo_file(string path) const;
-
-      
+       
 
 };
 

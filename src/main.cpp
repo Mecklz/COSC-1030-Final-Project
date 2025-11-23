@@ -5,7 +5,22 @@
 #include "..\header\dice.h"
 #include "..\header\day.h"
 
+
+
+void printTo_file(string path) {
+
+}
+
+void checkThresh() {
+
+}
+
+
 int main() {
+
+
+
+
   std::cout << "Stock Simulation!\n";
   std::string rerun = "play";
   

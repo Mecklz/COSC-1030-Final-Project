@@ -9,7 +9,7 @@
 Day::Day() {
     sold = roll(6);
     delivTime = roll(4);
-    unforeseen()
+    unforeseen();
 }
 
 void Day::unforeseen() {
@@ -39,8 +39,4 @@ void Day::unforeseen() {
             onHand_morn = onHand_morn - 1;
         }
     }
-}
-
-void Day::printTo_file(string path) const {
-
 }

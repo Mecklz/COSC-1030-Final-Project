@@ -106,6 +106,7 @@ int main() {
         }
         day[i].onHand_eod = onHand;
         totalOnhand += day[i].onHand_eod;
+        day[i].append_File();
       }
       avgOnhand = totalOnhand/numRuns;
       writeSummary(oosDays, totalSales, avgOnhand, totalLosswaste, target, numRuns, demand[x]);

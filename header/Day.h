@@ -16,10 +16,11 @@ class Day {
     int dayNum;
     std::string event;
     bool surprised;
-   
+    void append_File();
+    
    private:
     void unforeseen();
-    void append_File();
+    
        
 
 };

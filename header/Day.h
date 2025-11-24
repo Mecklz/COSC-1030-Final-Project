@@ -13,6 +13,7 @@ class Day {
     int onHand_eod;
     int thresholdUsed;
     int dayNum;
+    std::string event;
    
    private:
     void unforeseen();

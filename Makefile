@@ -21,5 +21,8 @@ test: test_cpp
 test_cpp: clean
 	cl $(TEST)\test.cpp /Fe:$(BIN)\test.exe
 
-clean:
+clean: refresh_sim
 	del $(BIN)\*
+
+refresh_sim:
+	del $(DOC)\Sim_Results.txt

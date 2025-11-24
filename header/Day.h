@@ -11,12 +11,14 @@ class Day {
     int sold;
     int onHand_morn;
     int onHand_eod;
-    int thresholdUsed;
+    int lossWaste;
+    std::string strat;
     int dayNum;
     std::string event;
    
    private:
     void unforeseen();
+    void append_File();
        
 
 };

@@ -3,6 +3,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <fstream>
+
+#include "..\header\functions.h"
 #include "..\header\dice.h"
 #include "..\header\day.h"
 
@@ -41,7 +44,18 @@ void Day::unforeseen() {
         // Theft
         else if (check == 4) {
             onHand_morn = onHand_morn - 1;
-            event = "Someone made off with product today."
+            event = "Someone made off with product today.";
         }
+    }
+}
+
+void Day::append_File() {
+    std::fstream file("doc\\Sim_Results.txt", std::ios::app);
+
+    std::string line =   "   " + std::to_string(dayNum) + "       " + std::to_string(onHand_morn) + "          " + std::to_string(onHand_eod) + "           " + std::to_string(sold) + "           " + std::to_string(lossWaste) + "          " + strat + "\n";
+
+    if (file.is_open()) {
+        file << line;
+        file.close();
     }
 }

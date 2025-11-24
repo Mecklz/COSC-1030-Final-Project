@@ -1,30 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+// #include <sstream>
 #include <ctime>
 #include <cmath>
 #include <string>
+#include <fstream>
+
+#include "..\header\functions.h"
 #include "..\header\dice.h"
 #include "..\header\day.h"
-
-int sterilizeInput(int maxSelection) {
-
-}
-
-void printTo_file(int dayNum, string path) {
-
-}
-
-bool atThreshold(int onHand, int threshold) {
-  if (onHand < threshold) {
-    return true;
-  }
-}
-
-void restock(int dayNum) {
-  // We're gonna start this as lines in the main loop since we want to access the
-  // restock vectors.
-}
 
 int main() {
 
@@ -72,7 +57,7 @@ int main() {
     std::cout << "2 - Persistent (Reorders are triggered by a revolving timer)" <<  std::endl;
     if (sterilizeInput(2) == 1) {
       std::cout << "Please enter the reorder threshold. EX. Low end number of items that will trigger a reorder." <<  std::endl;
-      threshold = sterilizeInput(0);
+      threshold = sterilizeInput(target-1);
     }
     else {
       persistent = true;
@@ -81,8 +66,8 @@ int main() {
       interval = sterilizeInput(0);
     }
 
-    std::cout << "Please enter the number of simulations *MAX 10,000*" << std::endl;
-    numRuns = sterilizeInput(0);
+    std::cout << "Please enter the number of days *MAX 365*" << std::endl;
+    numRuns = sterilizeInput(365);
 
     std::vector<Day> day(numRuns);
 
@@ -110,20 +95,28 @@ int main() {
         catch (...){}
 
         // Reorder and set delivery
-        if (!persistent) {
+        if (!persistent) {                          // Threshold strat
           if (onHand < threshold) {
             deliveryIn.push_back(day[i].delivTime);
             delivery.push_back(target - onHand);
           }
         }
-        else {
+        else {                                      // Persistent strat
           if (day[i].dayNum % interval == 0) {
             deliveryIn.push_back(day[i].delivTime);
             delivery.push_back(target - onHand);
           }
         }
+
+        // Record stock values and sell product. Record loss/waste.
         day[i].onHand_morn = onHand;
-        onHand += day[i].sold * demand[x];
+        onHand -= (day[i].sold * demand[x]);
+        if (onHand < 1) {
+          if (onHand < 0) {
+            day[i].lossWaste += (onHand*(-1));
+          }
+          onHand = 0;
+        }
         day[i].onHand_eod = onHand;
 
       }

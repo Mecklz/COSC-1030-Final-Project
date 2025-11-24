@@ -3,6 +3,33 @@
 
 using namespace std;
 
+// Declare a mess of variables
+
+    std::vector<int> deliveryIn;  // Time till delivery
+    std::vector<int> delivery;    // Amount delivered
+
+    int numRuns;                  // Number of variables
+    int onHand;                   // Stock on hand at any given time
+    int target;                   // Target stock level
+    int threshold;                // Re-order threshold
+    int interval;
+    int i;                        // Day iterator
+    int x;                        // Demand iterator
+    int y;                        // Delivery iterator
+    int sellMod;                  // Factor of 5 to modify sales numbers for bigger companies
+    const double demand[3] = {0.5, 1.0, 1.5};                // Progressive modifier for each run. Low, normal, high demand scenarios.
+
+    bool persistent;              // True if persistent re-order strat is selected
+
+// And now the summary variables
+
+    int oosDays = 0;
+    int totalSales = 0;
+    int totalOnhand = 0;
+    int avgOnhand = 0;
+    int totalLosswaste = 0;
+
+// Start the file with a stylish header
 void writeHeader(int totalDays, double demand) {
   std::fstream file("doc\\Sim_Results.txt", std::ios::app);
 
@@ -15,7 +42,25 @@ void writeHeader(int totalDays, double demand) {
     file << header;
     file.close();
   }
-  
+}
+
+void writeSummary(int oosDays, int totalSales, int avgOnhand, int totalLosswaste, int target, int days, double demand) {
+  std::fstream file("doc\\Sim_Results.txt", std::ios::app);
+
+  std::string summary = "------------------------------------------------------------------------\n"
+                        "Simulation ran for " + std::to_string(days) + "days with a demand mod of " + std::to_string(demand) + "\n"
+                        "\n  Total sales: " + std::to_string(totalSales) + "\n"
+                        "  Average stock on hand: " + std::to_string(avgOnhand) + "\n"
+                        "  Target on hand: " + std::to_string(target) + "\n"
+                        "  Total days out of stock: " + std::to_string(oosDays) + "\n"
+                        "  Total loss/waste: " + std::to_string(totalLosswaste) + "\n"
+                        "_________________________________________________________________________\n"
+                        "|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|\n\n";
+
+  if (file.is_open()) {
+    file << summary;
+    file.close();
+  }
 }
 
 int sterilizeInput(int maxSelection) {

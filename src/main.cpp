@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-// #include <sstream>
 #include <ctime>
 #include <cmath>
 #include <string>
@@ -20,26 +19,8 @@ int main() {
 
   while (rerun != "quit") {
 
-// Declare a mess of variables
-
-    std::vector<int> deliveryIn;  // Time till delivery
-    std::vector<int> delivery;    // Amount delivered
-
-    int numRuns;                  // Number of variables
-    int onHand;                   // Stock on hand at any given time
-    int target;                   // Target stock level
-    int threshold;                // Re-order threshold
-    int interval;
-    int i;                        // Day iterator
-    int x;                        // Demand iterator
-    int y;                        // Delivery iterator
-    int sellMod;                  // Factor of 5 to modify sales numbers for bigger companies
-    const double demand[3] = {0.5, 1.0, 1.5};                // Progressive modifier for each run. Low, normal, high demand scenarios.
-
-    bool persistent;              // True if persistent re-order strat is selected
-
     srand(time(0));               // Magic BEANS for a cow? WTH, Jack?!
-
+    
 // Menu selections
 
     std::cout << std::endl << "How big is your business based on projected volume?" <<  std::endl; // ***** Adjust below for volume
@@ -75,6 +56,7 @@ int main() {
 
     // Demand scenario loop
     for (x = 0; x < 3; x ++) {
+      writeHeader(numRuns, demand[x]);
 
       // Day loop
       for (i = 0; i < day.size(); i ++) {
@@ -109,20 +91,28 @@ int main() {
         }
 
         // Record stock values and sell product. Record loss/waste.
+        if (onHand < 1) {
+          oosDays ++;
+        }
         day[i].onHand_morn = onHand;
         onHand -= (day[i].sold * demand[x]);
         if (onHand < 1) {
           if (onHand < 0) {
             day[i].lossWaste += (onHand*(-1));
+            totalLosswaste += day[i].lossWaste;
+            totalSales += ((day[i].sold * demand[x]) - (day[i].lossWaste));
           }
           onHand = 0;
         }
         day[i].onHand_eod = onHand;
-
+        totalOnhand += day[i].onHand_eod;
       }
+      avgOnhand = totalOnhand/numRuns;
+      writeSummary(oosDays, totalSales, avgOnhand, totalLosswaste, target, numRuns, demand[x]);
     }
-
-  }
-    
-
+    cout << "\nAll three scenarios have run and the results have been appended to Sim_Results.txt" << endl;
+    cout << "Enter anything to run another 3 scenarios or enter 'quit' to terminate the program." << endl;
+    std::getline(std::cin, rerun);
+    std::cin.ignore(1000,'\n'); // Clears the buffer
+  }    
 }

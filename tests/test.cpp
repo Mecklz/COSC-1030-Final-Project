@@ -6,8 +6,11 @@
 #include <cmath>
 #include <string>
 #include <fstream>
+
+#include "..\header\functions.h"
 #include "..\header\dice.h"
 #include "..\header\day.h"
+
 using namespace std;
 
 

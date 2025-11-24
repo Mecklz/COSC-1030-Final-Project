@@ -15,6 +15,7 @@ class Day {
     std::string strat;
     int dayNum;
     std::string event;
+    bool surprised;
    
    private:
     void unforeseen();

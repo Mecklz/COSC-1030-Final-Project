@@ -18,9 +18,11 @@ Day::Day() {
 
 void Day::unforeseen() {
     int check;
+    surprised = false;
 
     check = roll(30);
     if (check == 13) {
+        surprised = true;
         check = roll(4);
 
         // Massive order
@@ -53,7 +55,9 @@ void Day::append_File() {
     std::fstream file("doc\\Sim_Results.txt", std::ios::app);
 
     std::string line =   "   " + std::to_string(dayNum) + "       " + std::to_string(onHand_morn) + "          " + std::to_string(onHand_eod) + "           " + std::to_string(sold) + "           " + std::to_string(lossWaste) + "          " + strat + "\n";
-
+    if (surprised) {
+        cout << "* * * * * " << event << " * * * * *" << endl;
+    }
     if (file.is_open()) {
         file << line;
         file.close();

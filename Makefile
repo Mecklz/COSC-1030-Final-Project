@@ -4,10 +4,10 @@ TEST = .\tests
 DOC = .\doc
 
 main: main_cpp
-	.\$(BIN)\main.exe
+	.\$(BIN)\simulate.exe
 
-main_cpp:
-	cl $(SRC)\main.cpp /Fe:$(BIN)\main.exe
+main_cpp: clean
+	cl $(SRC)\main.cpp $(SRC)\Day.cpp /Fe:$(BIN)\simulate.exe
 
 dice: dice_cpp
 	.\$(BIN)\dice.exe

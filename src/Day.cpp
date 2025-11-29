@@ -5,16 +5,10 @@
 #include <string>
 #include <fstream>
 
-#include "..\header\functions.h"
+// #include "..\header\functions.h"
 #include "..\header\dice.h"
 #include "..\header\day.h"
 
-
-Day::Day() {
-    sold = roll(6);
-    delivTime = roll(4);
-    unforeseen();
-}
 
 void Day::unforeseen() {
     int check;
@@ -56,10 +50,17 @@ void Day::append_File() {
 
     std::string line =   "   " + std::to_string(dayNum) + "       " + std::to_string(onHand_morn) + "          " + std::to_string(onHand_eod) + "           " + std::to_string(sold) + "           " + std::to_string(lossWaste) + "          " + strat + "\n";
     if (surprised) {
-        cout << "* * * * * " << event << " * * * * *" << endl;
+        line = line + "* * * * * " + event + " * * * * *\n";
     }
     if (file.is_open()) {
         file << line;
         file.close();
     }
+}
+
+Day::Day() {
+    onHand_morn = 0;
+    sold = roll(6);
+    delivTime = roll(4);
+    unforeseen();
 }

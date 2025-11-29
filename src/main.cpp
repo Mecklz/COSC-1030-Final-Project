@@ -31,7 +31,6 @@ int main() {
 
     std::cout << std::endl << "What is your target stock on hand?" <<  std::endl;
     target = sterilizeInput(0);
-    onHand = target;               // Set onHand with the stock target to begin
 
     std::cout << std::endl << "What restock startegy would you like to use?" <<  std::endl;
     std::cout << "1 - Threshold (Reorder triggered by dipping below a threshold)" <<  std::endl;
@@ -42,7 +41,7 @@ int main() {
     }
     else {
       persistent = true;
-      std::cout << std::endl <<  "Enter the order interval in days." <<  std::endl;
+      std::cout << std::endl <<  "Enter the order interval in days." ;
       std::cout << std::endl <<  "Reorder will trigger automatically at the end of every interval." <<  std::endl;
       interval = sterilizeInput(0);
     }
@@ -57,28 +56,33 @@ int main() {
     // Demand scenario loop
     for (x = 0; x < 3; x ++) {
       writeHeader(numRuns, demand[x]);
+      onHand = target;                  // Set onHand with the stock target to begin
 
       // Day loop
       for (i = 0; i < day.size(); i ++) {
 
+        day[i].dayNum = i + 1;                       // Set the day number in the class element
+
         // Receive a delivery
-        try {
-          for (y = 0; y < deliveryIn.size(); y ++){
+        
+        std::vector<int> cleanUp;                    // Cleanup vector for if one or more deliveries arrive
+        for (y = 0; y < deliveryIn.size(); y ++) {
             if (deliveryIn[y] > 0) {
-              deliveryIn[y] --;
+                deliveryIn[y] --;
             }
-            else if (deliveryIn[y] == 0){
-              onHand += delivery[y];
-              deliveryIn.erase(deliveryIn.begin() + y);
-              delivery.erase(delivery.begin() + y);
+            else if (deliveryIn[y] == 0) {
+                onHand += delivery[y];
+                cleanUp.insert(cleanUp.begin(), y);
             }
-          }
         }
-        catch (...){}
+        for (auto& index : cleanUp) {
+            deliveryIn.erase(deliveryIn.begin() + index);
+            delivery.erase(delivery.begin() + index);
+        }
 
         // Reorder and set delivery
         if (!persistent) {                          // Threshold strat
-          if (onHand < threshold) {
+          if (onHand < threshold && delivery.size() == 0) {
             deliveryIn.push_back(day[i].delivTime);
             delivery.push_back(target - onHand);
           }
@@ -94,13 +98,14 @@ int main() {
         if (onHand < 1) {
           oosDays ++;
         }
-        day[i].onHand_morn = onHand;
-        onHand -= (day[i].sold * demand[x]);
+        day[i].onHand_morn += onHand;
+        day[i].sold = (day[i].sold * demand[x] * sellMod);
+        onHand = day[i].onHand_morn - day[i].sold;
         if (onHand < 1) {
           if (onHand < 0) {
-            day[i].lossWaste += (onHand*(-1));
+            day[i].lossWaste = (onHand * (-1));
             totalLosswaste += day[i].lossWaste;
-            totalSales += ((day[i].sold * demand[x]) - (day[i].lossWaste));
+            totalSales += ((day[i].sold * demand[x] * sellMod) - (day[i].lossWaste));
           }
           onHand = 0;
         }

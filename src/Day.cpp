@@ -33,7 +33,7 @@ void Day::unforeseen() {
 
         // Fire
         else if (check == 3) {
-            onHand_morn = onHand_morn * roll(100,1,1);
+            onHand_morn = roll(100,1,1);
             event = "There was a fire in the stock room today.";
         }
 
@@ -45,10 +45,29 @@ void Day::unforeseen() {
     }
 }
 
+// void Day::start_ofDay(std::vector<int>& deliveryIn, std::vector<int>& delivery, int onHand) {
+//     std::vector<int> cleanUp;                    // Cleanup vector for if one or more deliveries arrive
+//     int y;
+
+//     for (y = 0; y < deliveryIn.size(); y ++) {
+//         if (deliveryIn[y] > 0) {
+//             deliveryIn[y] --;
+//         }
+//         else if (deliveryIn[y] == 0) {
+//             onHand += delivery[y];
+//             cleanUp.insert(cleanUp.begin(), y);
+//         }
+//     }
+//     for (auto& index : cleanUp) {
+//         deliveryIn.erase(deliveryIn.begin() + index);
+//         delivery.erase(delivery.begin() + index);
+//     }
+// }
+
 void Day::append_File() {
     std::fstream file("doc\\Sim_Results.txt", std::ios::app);
 
-    std::string line =   "   " + std::to_string(dayNum) + "       " + std::to_string(onHand_morn) + "          " + std::to_string(onHand_eod) + "           " + std::to_string(sold) + "           " + std::to_string(lossWaste) + "          " + strat + "\n";
+    std::string line =   "   " + std::to_string(dayNum) + "       " + std::to_string(onHand_morn) + "          " + std::to_string(onHand_eod) + "           " + std::to_string(sold) + "           " + std::to_string(lossWaste) + "\n";
     if (surprised) {
         line = line + "* * * * * " + event + " * * * * *\n";
     }
@@ -56,11 +75,21 @@ void Day::append_File() {
         file << line;
         file.close();
     }
+    reset();
+}
+
+void Day::reset() {
+    onHand_morn = 0;
+    onHand_eod = 0;
+    lossWaste = 0;    
 }
 
 Day::Day() {
+    fire = 1.0;
     onHand_morn = 0;
-    sold = roll(6);
+    onHand_eod = 0;
+    lossWaste = 0;
+    sale = roll(6);
     delivTime = roll(4);
     unforeseen();
 }

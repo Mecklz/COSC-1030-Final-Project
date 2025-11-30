@@ -62,9 +62,12 @@ int main() {
       for (i = 0; i < day.size(); i ++) {
 
         day[i].dayNum = i + 1;                       // Set the day number in the class element
+        int lostSale = 0;                           // Temp variable for lost sales due to oos
 
         // Receive a delivery
         
+        // day[i].start_ofDay(deliveryIn, delivery, day[i-1].onHand_eod)
+
         std::vector<int> cleanUp;                    // Cleanup vector for if one or more deliveries arrive
         for (y = 0; y < deliveryIn.size(); y ++) {
             if (deliveryIn[y] > 0) {
@@ -98,24 +101,28 @@ int main() {
         if (onHand < 1) {
           oosDays ++;
         }
-        day[i].onHand_morn += onHand;
-        day[i].sold = (day[i].sold * demand[x] * sellMod);
+        
+        day[i].onHand_morn += (onHand*day[i].fire);
+        day[i].sold = (day[i].sale * demand[x] * sellMod);
         onHand = day[i].onHand_morn - day[i].sold;
         if (onHand < 1) {
           if (onHand < 0) {
-            day[i].lossWaste = (onHand * (-1));
-            totalLosswaste += day[i].lossWaste;
-            totalSales += ((day[i].sold * demand[x] * sellMod) - (day[i].lossWaste));
+            lostSale += (onHand * (-1));
           }
           onHand = 0;
         }
+        
+        totalLosswaste += (day[i].lossWaste + lostSale);
+        totalSales += (day[i].sold - lostSale);
         day[i].onHand_eod = onHand;
         totalOnhand += day[i].onHand_eod;
         day[i].append_File();
       }
+
       avgOnhand = totalOnhand/numRuns;
       writeSummary(oosDays, totalSales, avgOnhand, totalLosswaste, target, numRuns, demand[x]);
     }
+
     cout << "\nAll three scenarios have run and the results have been appended to Sim_Results.txt" << endl;
     cout << "Enter anything to run another 3 scenarios or enter 'quit' to terminate the program." << endl;
     std::getline(std::cin, rerun);

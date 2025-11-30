@@ -10,6 +10,7 @@ using namespace std;
 
     int numRuns;                  // Number of variables
     int onHand;                   // Stock on hand at any given time
+    int lostSale;                 // Temp variable for lost sales due to oos
     int target;                   // Target stock level
     int threshold;                // Re-order threshold
     int interval;
@@ -33,11 +34,11 @@ using namespace std;
 void writeHeader(int totalDays, double demand) {
   std::fstream file("doc\\Sim_Results.txt", std::ios::app);
 
-  std::string header = "\n\n\n_______________________________________________________________________\n"
-                        "_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|\n"
+  std::string header = "\n\n\n____________________________________________________________\n"
+                        "_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_\n"
                         "|This scenario conducted for " + std::to_string(totalDays) + " days at a demand modifier of " + std::to_string(demand) + ".\n" 
-                        "|  DAY  | ON HAND AM | ON HAND PM | UNITS SOLD | WASTE/LOSS | STRATEGY |\n"
-                        "|_______|____________|____________|____________|____________|__________|\n";
+                        "|  DAY  | ON HAND AM | ON HAND PM | UNITS SOLD | WASTE/LOSS |\n"
+                        "|_______|____________|____________|____________|____________|\n";
   if (file.is_open()) {
     file << header;
     file.close();
@@ -47,15 +48,15 @@ void writeHeader(int totalDays, double demand) {
 void writeSummary(int oosDays, int totalSales, int avgOnhand, int totalLosswaste, int target, int days, double demand) {
   std::fstream file("doc\\Sim_Results.txt", std::ios::app);
 
-  std::string summary = "------------------------------------------------------------------------\n"
+  std::string summary = "-------------------------------------------------------------\n"
                         "Simulation ran for " + std::to_string(days) + "days with a demand mod of " + std::to_string(demand) + "\n"
                         "\n  Total sales: " + std::to_string(totalSales) + "\n"
                         "  Average stock on hand: " + std::to_string(avgOnhand) + "\n"
                         "  Target on hand: " + std::to_string(target) + "\n"
                         "  Total days out of stock: " + std::to_string(oosDays) + "\n"
                         "  Total loss/waste: " + std::to_string(totalLosswaste) + "\n"
-                        "_________________________________________________________________________\n"
-                        "|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|\n\n";
+                        "______________________________________________________________\n"
+                        "|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_\n\n";
 
   if (file.is_open()) {
     file << summary;

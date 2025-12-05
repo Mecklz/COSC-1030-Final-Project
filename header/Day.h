@@ -18,11 +18,9 @@ class Day {
     double fire;
     
     std::string event;
+    std::string get_rowData();
 
     bool surprised;
-    
-
-    void append_File();
     // void start_ofDay();
 
     Day();

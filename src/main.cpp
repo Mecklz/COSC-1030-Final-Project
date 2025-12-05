@@ -103,6 +103,7 @@ int main() {
         }
         
         day[i].onHand_morn += (onHand*day[i].fire);
+        day[i].lossWaste += onHand - day[i].onHand_morn;
         day[i].sold = (day[i].sale * demand[x] * sellMod);
         onHand = day[i].onHand_morn - day[i].sold;
         if (onHand < 1) {
@@ -112,18 +113,19 @@ int main() {
           onHand = 0;
         }
         
-        totalLosswaste += (day[i].lossWaste + lostSale);
+        totalLosswaste += day[i].lossWaste;
+        totalLostSales += lostSale;
         totalSales += (day[i].sold - lostSale);
         day[i].onHand_eod = onHand;
         totalOnhand += day[i].onHand_eod;
-        day[i].append_File();
+        append_File(day[i].get_rowData(), day[i].surprised, day[i].event);
       }
 
       avgOnhand = totalOnhand/numRuns;
-      writeSummary(oosDays, totalSales, avgOnhand, totalLosswaste, target, numRuns, demand[x]);
+      writeSummary(oosDays, totalSales, avgOnhand, totalLosswaste, totalLostSales, numRuns, demand[x], target);
     }
 
-    cout << "\nAll three scenarios have run and the results have been appended to Sim_Results.txt" << endl;
+    cout << "\nAll three scenarios have run and the results have been appended to .\\doc\\Sim_Results.txt" << endl;
     cout << "Enter anything to run another 3 scenarios or enter 'quit' to terminate the program." << endl;
     std::getline(std::cin, rerun);
     std::cin.ignore(1000,'\n'); // Clears the buffer

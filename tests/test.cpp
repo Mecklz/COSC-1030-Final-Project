@@ -153,33 +153,9 @@ int main(){
     int totalOnhand = 0;
     int avgOnhand = 0;
     int totalLosswaste = 0;
-    
-    std::cout << std::endl << "How big is your business based on projected volume?" <<  std::endl; // ***** Adjust below for volume
-    std::cout << "1 - Corner Store (~10-25 units on hand)" <<  std::endl;
-    std::cout << "2 - Major Retailer (~50-125 units on hand)" <<  std::endl;
-    std::cout << "3 - Wholesaler (~250-625 units on hand)" <<  std::endl;
-    sellMod = pow(5,(sterilizeInput(3)-1)); 
 
-    std::cout << std::endl << "What is your target stock on hand?" <<  std::endl;
-    target = sterilizeInput(0);
-    onHand = target;               // Set onHand with the stock target to begin
-
-    std::cout << std::endl << "What restock startegy would you like to use?" <<  std::endl;
-    std::cout << "1 - Threshold (Reorder triggered by dipping below a threshold)" <<  std::endl;
-    std::cout << "2 - Persistent (Reorders are triggered by a revolving timer)" <<  std::endl;
-    if (sterilizeInput(2) == 1) {
-      std::cout << "Please enter the reorder threshold. EX. Low end number of items that will trigger a reorder." <<  std::endl;
-      threshold = sterilizeInput(target-1);
-    }
-    else {
-      persistent = true;
-      std::cout << "\nEnter the order interval in days." ;
-      std::cout << "\nReorder will trigger automatically at the end of every interval.\n";
-      interval = sterilizeInput(0);
-    }
-
-    std::cout << "Please enter the number of days *MAX 365*" << std::endl;
-    numRuns = sterilizeInput(365);
+    const char space = 32;
+    cout << "dog" << space << "cat" << endl;
 
 
     // deliveryIn.push_back(3);

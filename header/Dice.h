@@ -25,14 +25,14 @@ double roll(Dice... dice) {  // The pack of ints is unpacked as arguments
 
 // A simple roll of a variable sided die
     if (length == 1) {             
-        return (rand() % (bag[0] + 1));  
+        return ((rand() % bag[0]) + 1);  
     }
 
 // An average of two similar, variable sided dice to create a more normal
 // distribtuion of probabilities. 
     else if (length == 2) {
         for (x = 0; x < bag[1]; x ++) {
-            rando = (rand() % (bag[0] + 1));
+            rando = ((rand() % bag[0]) + 1);
             temp += rando;
         }
         return temp / bag[1];
@@ -43,7 +43,7 @@ double roll(Dice... dice) {  // The pack of ints is unpacked as arguments
 // Same as above but further divided by the side count to create a proportion.
         if (bag[2] == 1) {
             for (x = 0; x < bag[1]; x ++) {
-                rando = (rand() % (bag[0] + 1));
+                rando = ((rand() % bag[0]) + 1);
                 temp += rando;
             }
             return ((temp / bag[1]) / bag[0]);
@@ -54,8 +54,8 @@ double roll(Dice... dice) {  // The pack of ints is unpacked as arguments
 // nothing above 7 and so cuts out the range leaving a regular distribution over the
 // new range 1-7
         else if (bag[2] == 0) {
-            temp = (rand() % (bag[0] + 1)) + (rand() % (bag[1] + 1));
-            return std::floor(temp / 2);
+            temp = ((rand() % bag[0]) + 1) + ((rand() % bag[1]) + 1);
+            return temp / 2;
         }
     }
 

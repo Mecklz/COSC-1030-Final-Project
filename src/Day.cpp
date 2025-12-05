@@ -13,6 +13,7 @@
 void Day::unforeseen() {
     int check;
     surprised = false;
+    fire = 1.0;
 
     check = roll(30);
     if (check == 13) {
@@ -27,13 +28,13 @@ void Day::unforeseen() {
 
         // Delayed Delivery
         else if (check == 2) {
-            delivTime = delivTime + roll(7,4,0); // Don't forget to repair dice.h for this roll
-            event = "Our delivery was delayed today.";
+            delivTime = delivTime + roll(8,3,0); // Don't forget to repair dice.h for this roll
+            event = "Any deliveries were delayed today.";
         }
 
         // Fire
         else if (check == 3) {
-            onHand_morn = roll(100,1,1);
+            fire = roll(100,1,1);
             event = "There was a fire in the stock room today.";
         }
 
@@ -64,18 +65,11 @@ void Day::unforeseen() {
 //     }
 // }
 
-void Day::append_File() {
-    std::fstream file("doc\\Sim_Results.txt", std::ios::app);
-
-    std::string line =   "   " + std::to_string(dayNum) + "       " + std::to_string(onHand_morn) + "          " + std::to_string(onHand_eod) + "           " + std::to_string(sold) + "           " + std::to_string(lossWaste) + "\n";
-    if (surprised) {
-        line = line + "* * * * * " + event + " * * * * *\n";
-    }
-    if (file.is_open()) {
-        file << line;
-        file.close();
-    }
+std::string Day::get_rowData() {
+    std::string line;
+    line = std::to_string(dayNum) + "," + std::to_string(onHand_morn) + "," + std::to_string(onHand_eod) + "," + std::to_string(sold) + "," + std::to_string(lossWaste);
     reset();
+    return line;
 }
 
 void Day::reset() {
